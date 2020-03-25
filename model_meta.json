@@ -1,0 +1,1 @@
+{"data":{"inputMin":[0,0,0],"inputMax":[600,16,13],"outputMin":[0],"outputMax":[2]},"meta":{"inputUnits":3,"outputUnits":1,"inputs":{"time":{"dtype":"number"},"red":{"dtype":"number"},"blue":{"dtype":"number"}},"outputs":{"result":{"dtype":"number"}},"isNormalized":true}}
