@@ -83,9 +83,8 @@
     <input type="text" id="red" name="red"><br><br>
     <label for="blue">blue:</label>
     <input type="text" id="blue" name="blue"><br><br>
-    <input type="submit" onclick="userInput()" value="Submit">
   </form>
-  <button onclick="userInput()">Try it</button>
+  <button onclick="userInput()">yeet</button>
   <p id="result"></p>
 </body>
 </html>
