@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Getting Started with ml5.js</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/ml5@0.4.3/dist/ml5.min.js"></script>
+  <style>
+    p {
+      font-family: "Courier New";
+    }
+  </style>
+</head>
+
+<body>
+  <script>
+    // Your code will go here
+    // open up your console - if everything loaded properly you should see 0.4.1
+    console.log('ml5 version:', ml5.version);
+
+    // Step 1: set your neural network options
+    const options = {
+      inputs: ["time","red","blue"],
+      outputs: ["result"],
+      task: 'regression',
+      debug: true
+    }
+
+    // Step 2: initialize your neural network
+    const nn = ml5.neuralNetwork(options);
+
+    //localStorage.setItem('model.json',"test");
+
+    const modelInfo = {
+      model: 'https://raw.githubusercontent.com/iloveHD/automatic-potato/master/model.json',
+      metadata: 'https://raw.githubusercontent.com/iloveHD/automatic-potato/master/model_meta.json',
+      weights: 'https://raw.githubusercontent.com/iloveHD/automatic-potato/master/model.weights.bin',
+    };
+
+    nn.load(modelInfo, finished);
+
+    function finished() {
+      //predict();
+    }
+
+    function predict(i_time,i_red,i_blue){
+      input = {
+        time: i_time,
+        red: i_red,
+        blue: i_blue
+      }
+      //var expected_result;
+      //nn.predict(input, handleResults).then(function(result){expected_result = result;console.log(expected_result);});
+      //return expected_result;
+      return nn.predict(input, handleResults);
+    }
+
+    function handleResults(error, result) {
+        if(error){
+          console.error(error);
+          return;
+        }
+        console.log(result);
+        return result;
+    }
+
+    function userInput() {
+      var scores = document.getElementById("scores");
+      var text = "";
+      time = scores.elements[0].value;
+      red = scores.elements[1].value;
+      blue = scores.elements[2].value;
+      predict(time, red, blue).then(function(result){
+        exp = result[0].value;
+        red = result[0].value / 2;
+        document.getElementById("result").innerHTML = "exp: " + exp + "<br>red: " + red + "<br>blu: " + (1-red);
+      });
+    }
+  </script>
+  <form id='scores'>
+    <label for="time">time (s):</label>
+    <input type="text" id="time" name="time"><br><br>
+    <label for="red">red:</label>
+    <input type="text" id="red" name="red"><br><br>
+    <label for="blue">blue:</label>
+    <input type="text" id="blue" name="blue"><br><br>
+    <input type="submit" onclick="userInput()" value="Submit">
+  </form>
+  <button onclick="userInput()">Try it</button>
+  <p id="result"></p>
+</body>
+</html>
